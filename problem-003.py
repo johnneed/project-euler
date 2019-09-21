@@ -6,19 +6,27 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 600,851,475,143 ?
 """
+from functools import reduce
 
 
-# The Sieve of Eratosthenes is one of the most efficient ways to find all of the smaller primes.
-def sieve(prime, nums):
-    foo = filter((lambda x: x % prime), nums)
-    return list(foo)
+def isPrime(primes, num):
+    foo = reduce((lambda x, y: x and bool(num % y)), primes, True)
+    return foo
 
 
-def generatePrimes(topRange=7500):
-    nums = list(range(2, topRange + 1))
-    while (len(nums) > 0):
-        yield nums[0]
-        nums = sieve(nums[0], nums)
+def findNextPrime(primes):
+    num = primes[len(primes) - 1] + 1
+    while not isPrime(primes, num):
+        num += 1
+    return num
+
+
+def generatePrimes(topRange):
+    primes = [2]
+    while (topRange >= primes[len(primes) - 1]):
+        yield primes[len(primes) - 1]
+        newPrime = findNextPrime(primes)
+        primes.append(newPrime)
 
 
 def findLargestPrimeFactor(num):
