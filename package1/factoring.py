@@ -1,7 +1,10 @@
 import math
 from functools import reduce
 
-flatten = lambda l: [item for sublist in l for item in sublist]
+def flatten(orgList):
+    for x in orgList:
+        for y in x:
+            flattened_list.append(y)
 
 def _isPrime(primes, num):
     return reduce((lambda x, y: x and bool(num % y)), primes, True)
@@ -37,7 +40,7 @@ def isPrime(num):
 def getFirstPrimeFactor(num):
     primeGenerator = generatePrimes(num)
     prime = next(primeGenerator)
-    while not num % prime:
+    while num % prime:
         prime = next(primeGenerator)
     return prime
 
@@ -48,13 +51,13 @@ def getLargestPrimeFactor(num):
 class FactorNode:
     def __init__(self, product):
         primeFactor = getFirstPrimeFactor(product)
-        otherFactor = product / primeFactor
+        otherFactor = int(product / primeFactor)
         self.primeFactor = primeFactor
         self.childNode = otherFactor if isPrime(otherFactor) else FactorNode(otherFactor)
 
     def toList(self):
         otherIsInt = type(self.childNode) is int
-        otherFactor = self.childNode if otehrIsInt else self.childNode.toList()
-        newList = self.primeFactor.copy()
-        newList.append(otherFactor)
-        return flatten(newList)
+        otherFactor = self.childNode if otherIsInt else self.childNode.toList()
+        newList = [otherFactor] + [self.primeFactor]
+        flattened = flatten(newList)
+        return  filter((lambda x: not x == 1), flattened)
