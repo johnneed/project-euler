@@ -15,7 +15,7 @@ def isPrime(primes, num):
 
 
 def findNextPrime(primes):
-    num = primes[len(primes) - 1] + 1
+    num = primes[-1] + 1
     while not isPrime(primes, num):
         num += 1
     return num
@@ -23,15 +23,15 @@ def findNextPrime(primes):
 
 def generatePrimes(topRange):
     primes = [2]
-    while (topRange >= primes[len(primes) - 1]):
-        yield primes[len(primes) - 1]
+    while (topRange >= primes[-1]):
+        yield primes[-1]
         newPrime = findNextPrime(primes)
         primes.append(newPrime)
 
 
 def findLargestPrimeFactor(num):
     if num < 2 or num % 1:
-        return 'Enter a integer larger than 1'
+        raise Exception('Invalid parameter. Enter an integer larger than 1')
     prime = generatePrimes(num)
     myPrime = next(prime)
     while num > myPrime:

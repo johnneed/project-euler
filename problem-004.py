@@ -6,9 +6,32 @@ A palindromic number reads the same both ways. The largest palindrome made from 
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
+from package1 import factoring
 
-largestPalindrom = 0
+largestPalindrome = 0
 
 def isPalindrome(num):
-    return str(num)[::-1] == str(num)
+    numStr = str(num)
+    return numStr[::-1] == numStr
 
+def findLargestPalindrome(topRange):
+    for x in range(topRange, 0, -1):
+        if(isPalindrome(x)):
+            return x
+
+def findLargestIntegerOfSize(digits):
+    if digits < 1 or digits % 1:
+       raise Exception('Invalid input. Enter a positive Integer')
+    newSum = 9 * 10 ** (digits - 1)
+    return  newSum if digits == 1 else newSum + findLargestIntegerOfSize(digits - 1)
+
+def findLargesPaldromeWithFactorSize(size):
+    # largestProduct = findLargestIntegerOfSize(size)
+    # largePalindrome = findLargestPalindrome(largestProduct)
+    factors = factoring.FactorNode(size)
+    factors = factors.toList()
+    return factors
+
+
+foo = findLargesPaldromeWithFactorSize(24)
+print(foo)
