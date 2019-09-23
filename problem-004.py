@@ -25,14 +25,20 @@ def findLargestIntegerOfSize(digits):
     newSum = 9 * 10 ** (digits - 1)
     return  newSum if digits == 1 else newSum + findLargestIntegerOfSize(digits - 1)
 
+
+def productHasTwoGoodFactors(factors, size):
+    def foo(factor, factors)
+        if factor >= 10 ** size and <= findLargestIntegerOfSize(size)
+
+
+
 def findLargesPaldromeWithFactorSize(size):
-    # largestProduct = findLargestIntegerOfSize(size)
-    # largePalindrome = findLargestPalindrome(largestProduct)
-    factors = factoring.FactorNode(size)
+    largestProduct = findLargestIntegerOfSize(size)
+    largePalindrome = findLargestPalindrome(largestProduct)
+    factors = factoring.FactorNode(largePalindrome)
     factors = factors.toList()
-    return factors
+    isGood = productHasTwoGoodFactors(factors, size);
+    return isGood
 
 
-
-foo = findLargesPaldromeWithFactorSize(24)
-print(foo)
+foo = findLargesPaldromeWithFactorSize(3)

@@ -41,5 +41,4 @@ def findLargestPrimeFactor(num):
             myPrime = next(prime)
     return myPrime
 
-
 print(findLargestPrimeFactor(600851475143))
