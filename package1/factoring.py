@@ -1,7 +1,13 @@
 import math
 from functools import reduce
+from package1.primes import primeList
 
-def flatten(aList, t=[]):
+primesCache = primeList
+
+
+def flatten(aList, t=None):
+    if t is None:
+        t = []
     for i in aList:
         if type(i) != list:
             t.append(i)
@@ -10,27 +16,32 @@ def flatten(aList, t=[]):
     return t
 
 
-def _isPrime(primes, num):
-    return reduce((lambda x, y: x and bool(num % y)), primes, True)
+def _isPrime(num):
+    for prime in primesCache:
+       if not bool(num % prime):
+           return False
+    return True
 
-
-def _findNextPrime(primes):
-    num = primes[len(primes) - 1] + 1
-    while not _isPrime(primes, num):
+def _findNextPrime():
+    num = primesCache[-1] + 1
+    while not _isPrime(num):
+        print("\r","checking prime status for", num, end='')
         num += 1
+    primesCache.append(num)
     return num
 
 
-def generatePrimes(topRange):
-    primes = [2]
-    while (topRange >= primes[len(primes) - 1]):
-        yield primes[len(primes) - 1]
-        newPrime = _findNextPrime(primes)
-        primes.append(newPrime)
+def generatePrimes():
+    index = 0
+    while (True):
+        yield primesCache[index]
+        index += 1
+        if( index >= len(primesCache)):
+            _findNextPrime()
 
 
 def findAllPrimesUpTo(num):
-    primeGenerator = generatePrimes(math.inf)
+    primeGenerator = generatePrimes()
     primes = []
     while True:
         prime = next(primeGenerator)
@@ -42,11 +53,11 @@ def findAllPrimesUpTo(num):
 
 def isPrime(num):
     primes = findAllPrimesUpTo(num)
-    return _isPrime(primes, num)
+    return _isPrime(num)
 
 
 def getFirstPrimeFactor(num):
-    primeGenerator = generatePrimes(num)
+    primeGenerator = generatePrimes()
     prime = next(primeGenerator)
     while num % prime:
         prime = next(primeGenerator)
