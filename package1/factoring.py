@@ -23,10 +23,11 @@ def _isPrime(num):
     return True
 
 def _findNextPrime():
-    num = primesCache[-1] + 1
+    num = primesCache[-1] + 2
     while not _isPrime(num):
+        num += 2
         print("\r","checking prime status for", num, end='')
-        num += 1
+
     primesCache.append(num)
     return num
 
