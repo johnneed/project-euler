@@ -8,30 +8,44 @@ What is the smallest positive number that is evenly divisible by all of the numb
 """
 
 from package1 import factoring
+from functools import reduce
 
 def isDivisible(topRange, num):
     for x in range(2, topRange + 1):
         print("\r", "Checking number:", num, end="")
-        if(num % x):
+        if (num % x):
             return False
     return True
 
 
+def cleanFactor(lists, factor):
+    newLists = []
+    for x in lists:
+        cleaned = (x[:x.index(factor):] + x[x.index(factor) + 1::]) if factor in x else x
+        newLists.append(cleaned)
+    return newLists
+
+
+def sieve(factorsList, factors=None):
+    if factors == None:
+        factors = []
+    filteredLists = list(filter((lambda l: len(l)), factorsList))
+    if not len(filteredLists):
+        return factors
+    bar = filteredLists[0][0]
+    newFactors = factors.copy()
+    newFactors.append(bar)
+    cleaned = cleanFactor(filteredLists, bar)
+    return sieve(cleaned, newFactors)
+
+
 def go(num):
-    primes = factoring.findAllPrimesUpTo(num)
-    highest = 1
-    lowest = 1
-    for x in range(2,num + 1):
-        highest = highest * x;
-    for y in primes:
-        lowest = lowest * y;
-    print("lowest is", lowest)
-    print("highest is", highest)
-    for z in range(lowest, highest + 1):
-        if(isDivisible(num, z)):
-            return z
-
-
+    factoredNumbers = []
+    for x in range(2, num + 1):
+        factoredNumbers.append(factoring.FactorNode(x).toList())
+    finalFactors =  sieve(factoredNumbers)
+    answer = reduce((lambda x, y: x * y), finalFactors)
+    return answer
 
 answer = go(20)
 print(answer)
