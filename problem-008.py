@@ -41,14 +41,13 @@ def go(size):
     bigProduct = 0
     factors = []
     for x in range(0, bigStringLength):
-        digits = list(map((lambda i: int(i)), bigString[x: x + size ]))
+        digits = list(map((lambda i: int(i)), bigString[x: x + size]))
         product = reduce(lambda x, y: x * y, digits)
         if bigProduct < product:
             bigProduct = product
             factors = digits
-    return factors
+    return ( ''.join(str(f) for f in factors),  reduce((lambda x, y: x * y), factors))
 
 
-factors = go(13)
-product = reduce((lambda x, y: x * y), factors);
-print("The factors are: ", factors, ". Who's  prouct is: ", product)
+answer = go(13)
+print("The sequence is:", answer[0], " Who's  product is: ", answer[1])
