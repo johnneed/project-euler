@@ -1,4 +1,5 @@
 import math
+import cmath
 from functools import reduce
 from package1.primes import primeList
 
@@ -89,3 +90,11 @@ class FactorNode:
         filtered = filter((lambda x: x != 1), flattened)
         aList = list(filtered)
         return aList
+
+def solveQuadratic(a, b, c):
+    d = (b ** 2) - (4 * a * c)
+
+    # find two solutions
+    sol1 = (-b - cmath.sqrt(d)) / (2 * a)
+    sol2 = (-b + cmath.sqrt(d)) / (2 * a)
+    return (sol1, sol2)
