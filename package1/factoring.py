@@ -19,15 +19,16 @@ def flatten(aList, t=None):
 
 def _isPrime(num):
     for prime in primesCache:
-       if not bool(num % prime):
-           return False
+        if not bool(num % prime):
+            return False
     return True
+
 
 def _findNextPrime():
     num = primesCache[-1] + 2
     while not _isPrime(num):
         num += 2
-        print("\r","checking prime status for", num, end='')
+        print("\r", "checking prime status for", num, end='')
 
     primesCache.append(num)
     return num
@@ -38,7 +39,7 @@ def generatePrimes():
     while (True):
         yield primesCache[index]
         index += 1
-        if( index >= len(primesCache)):
+        if (index >= len(primesCache)):
             _findNextPrime()
 
 
@@ -91,6 +92,7 @@ class FactorNode:
         aList = list(filtered)
         return aList
 
+
 def solveQuadratic(a, b, c):
     d = (b ** 2) - (4 * a * c)
 
@@ -98,3 +100,25 @@ def solveQuadratic(a, b, c):
     sol1 = (-b - cmath.sqrt(d)) / (2 * a)
     sol2 = (-b + cmath.sqrt(d)) / (2 * a)
     return (sol1, sol2)
+
+
+def sieveAllPrimesUpTo(num):
+    primelist = [2]
+    arraySize = primelist[-1] if primelist[-1] < 1000 else 1000
+    startingIndex = primelist[-1]
+    finalIndex = startingIndex + arraySize
+    while finalIndex < num + arraySize:
+        currentBlock = set(range(startingIndex, finalIndex))
+        for x in primelist:
+            currentList  = list(currentBlock)
+            for y in currentList:
+                if( y % x == 0):
+                    currentBlock.remove(y)
+        primelist += currentBlock
+        arraySize = primelist[-1] if primelist[-1] < 1000 else 1000
+        startingIndex = finalIndex + 1
+        finalIndex += arraySize
+        print("\r", primelist, end='')
+    print("\n")
+    return primelist
+
