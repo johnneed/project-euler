@@ -22,6 +22,7 @@ What is the value of the first triangle number to have over five hundred divisor
 """
 from package1 import factoring
 
+
 def generateTriangleNumber():
     num = 0
     while (True):
@@ -36,23 +37,24 @@ def findAllFactors(primeFactors):
     factor1 = primeFactors[0]
     otherFactors = primeFactors[1:]
     if len(otherFactors) == 0:
-        return factor1
-    for x
+        return [1, factor1]
+    factors = findAllFactors(otherFactors)
+    return factors + list(map(lambda x: factor1 * x, factors))
+
 
 def go(num):
     generator = generateTriangleNumber()
-    factors  = []
+    factors = []
     triangle = next(generator)
     while len(factors) < num:
-        primeFactors = factoring.FactorNode(triangle).toList()
-        factors = set(findAllFactors(primeFactors))
         triangle = next(generator)
-    return  triangle
+        primeFactors = factoring.FactorNode(triangle).toList()
+        factors = list(set(findAllFactors(primeFactors)))
+        print("\rFactors Found:", len(factors), end="")
+    print("\n")
+
+    return triangle
 
 
-
-
-
-answer = go(5)
+answer = go(500)
 print(answer)
-

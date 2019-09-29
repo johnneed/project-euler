@@ -25,10 +25,10 @@ def _isPrime(num):
 
 
 def _findNextPrime():
+    print("\r", "Finding Primes", end='')
     num = primesCache[-1] + 2
     while not _isPrime(num):
         num += 2
-        print("\r", "checking prime status for", num, end='')
 
     primesCache.append(num)
     return num
@@ -60,6 +60,8 @@ def isPrime(num):
 
 
 def getFirstPrimeFactor(num):
+    if num == 1:
+        return 1
     primeGenerator = generatePrimes()
     prime = next(primeGenerator)
     while num % prime:
@@ -110,9 +112,9 @@ def sieveAllPrimesUpTo(num):
     while finalIndex < num + arraySize:
         currentBlock = set(range(startingIndex, finalIndex))
         for x in primelist:
-            currentList  = list(currentBlock)
+            currentList = list(currentBlock)
             for y in currentList:
-                if( y % x == 0):
+                if (y % x == 0):
                     currentBlock.remove(y)
         primelist += currentBlock
         arraySize = primelist[-1] if primelist[-1] < 1000 else 1000
@@ -122,3 +124,11 @@ def sieveAllPrimesUpTo(num):
     print("\n")
     return primelist
 
+
+def findAllFactors(primeFactors):
+    factor1 = primeFactors[0]
+    otherFactors = primeFactors[1:]
+    if len(otherFactors) == 0:
+        return [1, factor1]
+    factors = findAllFactors(otherFactors)
+    return factors + list(map(lambda x: factor1 * x, factors))
