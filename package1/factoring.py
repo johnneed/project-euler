@@ -25,7 +25,6 @@ def _isPrime(num):
 
 
 def _findNextPrime():
-    print("\r", "Finding Primes", end='')
     num = primesCache[-1] + 2
     while not _isPrime(num):
         num += 2
