@@ -49,10 +49,6 @@ def go(num):
         triangle = next(generator)
     return  triangle
 
-
-
-
-
 answer = go(5)
 print(answer)
 
