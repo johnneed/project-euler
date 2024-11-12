@@ -15,7 +15,7 @@ def findSumOfAllPrimesBelow(num):
     generator = factoring.generatePrimes()
     prime = next(generator)
     sum = 0
-    while (prime < num:
+    while (prime < num):
         sum += prime
         prime = next(generator)
     return sum
